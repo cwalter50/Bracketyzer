@@ -29,6 +29,7 @@ struct BracketyzerApp: App {
       NavigationView {
         ContentView()
       }
+      
     }
   }
 }

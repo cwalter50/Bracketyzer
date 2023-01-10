@@ -9,24 +9,42 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State var brackets: [String] = ["Test", "MarchMadness 2023", "MarchMadness 2022"]
     
     
     var body: some View {
         List {
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
-                Text("Hello, world!")
+            ForEach(brackets, id: \.self) { bracket in
+                Text(bracket)
             }
-            .padding()
         }
+        .navigationTitle("Bracketyzer")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    addName()
+                } label: {
+                    Image(systemName: "plus")
+                }
+
+            }
+        }
+        
+        
+        
+    }
+    
+    func addName()
+    {
         
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        NavigationView {
+            ContentView()
+        }
+        
     }
 }
