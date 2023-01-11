@@ -20,6 +20,7 @@
 		83F471C8296DAE69008A4A7F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83F471C7296DAE69008A4A7F /* FirebaseStorage */; };
 		83F471CC296DB364008A4A7F /* EditBracketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F471CB296DB364008A4A7F /* EditBracketView.swift */; };
 		83F471CE296DB709008A4A7F /* Bracket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F471CD296DB709008A4A7F /* Bracket.swift */; };
+		83F471D1296DEC0C008A4A7F /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F471D0296DEC0C008A4A7F /* Team.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		83F471B9296DABC2008A4A7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		83F471CB296DB364008A4A7F /* EditBracketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBracketView.swift; sourceTree = "<group>"; };
 		83F471CD296DB709008A4A7F /* Bracket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bracket.swift; sourceTree = "<group>"; };
+		83F471D0296DEC0C008A4A7F /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +74,7 @@
 				83F471A9296DAB82008A4A7F /* BracketyzerApp.swift */,
 				83F471AB296DAB82008A4A7F /* ContentView.swift */,
 				83F471CB296DB364008A4A7F /* EditBracketView.swift */,
-				83F471CD296DB709008A4A7F /* Bracket.swift */,
+				83F471CF296DEBD8008A4A7F /* Model */,
 				83F471AD296DAB84008A4A7F /* Assets.xcassets */,
 				83F471B9296DABC2008A4A7F /* GoogleService-Info.plist */,
 				83F471AF296DAB84008A4A7F /* Preview Content */,
@@ -86,6 +88,15 @@
 				83F471B0296DAB84008A4A7F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		83F471CF296DEBD8008A4A7F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83F471CD296DB709008A4A7F /* Bracket.swift */,
+				83F471D0296DEC0C008A4A7F /* Team.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,6 +184,7 @@
 				83F471CE296DB709008A4A7F /* Bracket.swift in Sources */,
 				83F471AC296DAB82008A4A7F /* ContentView.swift in Sources */,
 				83F471CC296DB364008A4A7F /* EditBracketView.swift in Sources */,
+				83F471D1296DEC0C008A4A7F /* Team.swift in Sources */,
 				83F471AA296DAB82008A4A7F /* BracketyzerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
