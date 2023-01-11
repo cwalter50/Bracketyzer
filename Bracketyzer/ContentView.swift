@@ -13,10 +13,12 @@ struct ContentView: View {
     
     @State var showEditBracketView = false
     
+    @EnvironmentObject var vm: BracketsViewModel
+    
     
     var body: some View {
         List {
-            ForEach(brackets) { bracket in
+            ForEach(vm.brackets) { bracket in
                 Text(bracket.name)
             }
         }
@@ -28,24 +30,14 @@ struct ContentView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
-
-//                Button {
-//                    addName()
-//                } label: {
-//                    Image(systemName: "plus")
-//                }
-
             }
+        }
+        .onAppear {
+            vm.loadBrackets()
         }
         
     }
     
-    func addName()
-    {
-        let bracket = Bracket(name: "hello", about: "sample paragraph")
-        brackets.append(bracket)
-        
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -53,6 +45,8 @@ struct ContentView_Previews: PreviewProvider {
         NavigationView {
             ContentView()
         }
+        .environmentObject(BracketsViewModel())
+        
         
     }
 }

@@ -16,11 +16,11 @@ class Bracket: Identifiable, Codable, ObservableObject
 
     @Published var teams: [Team]
     
-    @Published var id: UUID
+    @Published var id: String
     
 
     
-    init(name: String = "", about: String = "", id: UUID = UUID(), teams: [Team] = [])
+    init(name: String = "", about: String = "", id: String = UUID().uuidString, teams: [Team] = [])
     {
         self.name = name
         self.about = about
@@ -30,6 +30,16 @@ class Bracket: Identifiable, Codable, ObservableObject
         
     }
     
+    // data from Firestore
+    init(data: [String: Any])
+    {
+        self.name = data["name"] as? String ?? ""
+        self.about = data["about"] as? String ?? ""
+        self.id = data["id"] as? String ?? UUID().uuidString
+        self.created = data["created"] as? Double ?? Date().timeIntervalSince1970
+        self.teams = []
+    }
+    
     
     func updateTeamRanks()
     {
@@ -37,6 +47,19 @@ class Bracket: Identifiable, Codable, ObservableObject
         {
             teams[i].rank = i+1
         }
+    }
+    
+    func toDictionaryValues() -> [String: Any]
+    {
+        let dictionary: [String: Any] = [
+            "name": self.name,
+            "about": self.about,
+            "created": self.created,
+            "id": self.id,
+//            "teams": self.teams
+        ]
+        
+        return dictionary
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -52,7 +75,7 @@ class Bracket: Identifiable, Codable, ObservableObject
         name = try values.decode(String.self, forKey: .name)
         about = try values.decode(String.self, forKey: .about)
         teams = try values.decode([Team].self, forKey: .teams)
-        id = try values.decode(UUID.self, forKey: .id)
+        id = try values.decode(String.self, forKey: .id)
         created = try values.decode(Double.self, forKey: .created)
     }
     

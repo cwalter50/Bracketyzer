@@ -14,6 +14,8 @@ struct EditBracketView: View {
     
     @State private var editMode = EditMode.active
     
+    @EnvironmentObject var vm: BracketsViewModel
+    
     
     var body: some View {
         VStack {
@@ -23,7 +25,7 @@ struct EditBracketView: View {
                 Text("About:")
                     .font(.headline)
                 TextEditor(text: $bracket.about)
-                    .frame(height: 100)
+                    .frame(height: 75)
             }
             Spacer()
             Divider()
@@ -63,7 +65,18 @@ struct EditBracketView: View {
             .listStyle(.plain)
             .environment(\.editMode, $editMode)
         }
-        .padding()
+        .padding(.horizontal)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    saveToFirebase()
+                } label: {
+                    Text("Save")
+                }
+                .disabled(bracket.name == "")
+
+            }
+        }
         
     }
     
@@ -83,10 +96,18 @@ struct EditBracketView: View {
         newName = ""
         
     }
+    
+    func saveToFirebase() {
+        vm.firManager.saveBracket(bracket: self.bracket)
+    }
 }
 
 struct EditBracketView_Previews: PreviewProvider {
     static var previews: some View {
-        EditBracketView(bracket: Bracket())
+        NavigationStack {
+            EditBracketView(bracket: Bracket())
+        }
+        .environmentObject(BracketsViewModel())
+       
     }
 }

@@ -20,18 +20,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct BracketyzerApp: App {
-  // register app delegate for Firebase setup
-  @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    // register app delegate for Firebase setup
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
+    @StateObject var vm = BracketsViewModel()
 
-  var body: some Scene {
-    WindowGroup {
-      NavigationView {
-        ContentView()
-      }
-      
+    var body: some Scene {
+        WindowGroup {
+            NavigationView {
+                ContentView()
+            }
+            .environmentObject(vm)
+        }
+        
     }
-  }
 }
 
 
