@@ -15,11 +15,16 @@ struct ContentView: View {
     
     @EnvironmentObject var vm: BracketsViewModel
     
-    
     var body: some View {
         List {
             ForEach(vm.brackets) { bracket in
-                Text(bracket.name)
+                NavigationLink {
+                    EditBracketView(bracket: bracket)
+                } label: {
+                    Text("\(bracket.name)")
+                }
+
+//                Text(bracket.name)
             }
         }
         .navigationTitle("Bracketyzer")

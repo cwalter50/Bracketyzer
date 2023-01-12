@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 
 class Bracket: Identifiable, Codable, ObservableObject
@@ -31,13 +32,17 @@ class Bracket: Identifiable, Codable, ObservableObject
     }
     
     // data from Firestore
-    init(data: [String: Any])
+    init(snapshot: QueryDocumentSnapshot)
     {
+        let data = snapshot.data()
         self.name = data["name"] as? String ?? ""
         self.about = data["about"] as? String ?? ""
         self.id = data["id"] as? String ?? UUID().uuidString
         self.created = data["created"] as? Double ?? Date().timeIntervalSince1970
         self.teams = []
+        
+        
+//        print(data)
     }
     
     

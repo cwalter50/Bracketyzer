@@ -9,28 +9,40 @@ import SwiftUI
 
 struct EditBracketView: View {
     
-    @ObservedObject var bracket: Bracket
+//    @ObservedObject var bracket: Bracket
     @State var newName: String = ""
     
     @State private var editMode = EditMode.active
     
-    @EnvironmentObject var vm: BracketsViewModel
+    @ObservedObject var vm: BracketViewModel
     
+    init()
+    {
+//        bracket = Bracket()
+        vm = BracketViewModel()
+    }
+    
+    init(bracket: Bracket)
+    {
+//        self.bracket = bracket
+        vm = BracketViewModel(b: bracket)
+    }
     
     var body: some View {
         VStack {
-            TextField("Bracket Name", text: $bracket.name)
+            TextField("Bracket Name", text: $vm.bracket.name)
                 .font(.title)
+                .onSubmit(saveBracketToFirebase)
             HStack(alignment: .firstTextBaseline, spacing: 5) {
                 Text("About:")
                     .font(.headline)
-                TextEditor(text: $bracket.about)
+                TextEditor(text: $vm.bracket.about)
                     .frame(height: 75)
             }
             Spacer()
             Divider()
             Text("Teams and Rankings")
-                .font(.headline)
+                .font(.title3)
             Divider()
             HStack {
                 TextField("Enter Team", text: $newName)
@@ -52,7 +64,7 @@ struct EditBracketView: View {
             .padding(.horizontal)
             List {
 //                ForEach(bracket.teams.sorted {$0.rank < $1.rank}) {
-                ForEach(bracket.teams) {
+                ForEach(vm.bracket.teams) {
                     team in
                     HStack{
                         Image(systemName: "\(team.rank).circle.fill")
@@ -69,13 +81,17 @@ struct EditBracketView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    saveToFirebase()
+                    saveBracketToFirebase()
                 } label: {
                     Text("Save")
                 }
-                .disabled(bracket.name == "")
+                .disabled(vm.bracket.name == "")
 
             }
+        }
+        .onAppear {
+            vm.loadTeams()
+
         }
         
     }
@@ -83,31 +99,33 @@ struct EditBracketView: View {
     func move(from: IndexSet, to: Int) {
 
         print("Moving item at position \(from.count) to position \(to)")
-        bracket.teams.move(fromOffsets: from, toOffset: to)
-        bracket.updateTeamRanks()
+        vm.bracket.teams.move(fromOffsets: from, toOffset: to)
+        vm.bracket.updateTeamRanks()
         
     }
     
     func addTeam()
     {
-        let newTeam = Team(name: newName, rank: bracket.teams.count + 1)
+        let newTeam = Team(name: newName, rank: vm.bracket.teams.count + 1)
         
-        bracket.teams.append(newTeam)
+        vm.bracket.teams.append(newTeam)
         newName = ""
+        
+        vm.addTeamToBracket(team: newTeam)
         
     }
     
-    func saveToFirebase() {
-        vm.firManager.saveBracket(bracket: self.bracket)
+    func saveBracketToFirebase() {
+        vm.saveBracket()
     }
+    
 }
 
 struct EditBracketView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            EditBracketView(bracket: Bracket())
+            EditBracketView()
         }
-        .environmentObject(BracketsViewModel())
        
     }
 }

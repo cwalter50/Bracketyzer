@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 
 class Team: Codable, Identifiable
@@ -31,8 +32,9 @@ class Team: Codable, Identifiable
     }
     
     // data from Firestore
-    init(data: [String: Any])
+    init(snapshot: QueryDocumentSnapshot)
     {
+        let data = snapshot.data()
         self.name = data["name"] as? String ?? ""
         self.rank = data["rank"] as? Int ?? 1
         self.id = data["id"] as? String ?? UUID().uuidString
