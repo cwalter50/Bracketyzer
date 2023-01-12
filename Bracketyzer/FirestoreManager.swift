@@ -26,6 +26,29 @@ class FirestoreManager: ObservableObject {
         }
     }
     
+    // Do a batch update of all teams in a bracket. This should be called when we reorder the list
+    func updateAllTeamsInBracket(bracket: Bracket)
+    {
+        let docRef = db.collection("Brackets").document(bracket.id).collection("Teams")
+        
+        // Get new write batch
+        let batch = db.batch()
+        
+        for team in bracket.teams {
+            let teamRef = docRef.document(team.id)
+            batch.updateData(team.toDictionaryValues(), forDocument: teamRef)
+        }
+
+        // Commit the batch
+        batch.commit() { err in
+            if let err = err {
+                print("Error writing batch on all teams\(err)")
+            } else {
+                print("Batch write succeeded on updating all teams")
+            }
+        }
+    }
+    
     
     func updateBracket(bracket: Bracket)
     {

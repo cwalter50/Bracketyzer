@@ -21,7 +21,6 @@ class Team: Codable, Identifiable
         name = "unknown"
         rank = 1
         id = UUID().uuidString
-        
     }
     
     init(name: String = "", rank: Int = 1)
@@ -48,7 +47,6 @@ class Team: Codable, Identifiable
             "rank": self.rank,
             "id": self.id,
             "created": self.created
-
         ]
         
         return dictionary

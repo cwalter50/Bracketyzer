@@ -98,9 +98,11 @@ struct EditBracketView: View {
     
     func move(from: IndexSet, to: Int) {
 
-        print("Moving item at position \(from.count) to position \(to)")
+//        print("Moving item at position \(from.count) to position \(to)")
         vm.bracket.teams.move(fromOffsets: from, toOffset: to)
         vm.bracket.updateTeamRanks()
+        
+        vm.updateAllTeamsInBracketInFirestore()
         
     }
     
@@ -111,12 +113,12 @@ struct EditBracketView: View {
         vm.bracket.teams.append(newTeam)
         newName = ""
         
-        vm.addTeamToBracket(team: newTeam)
+        vm.addTeamToBracketInFirestore(team: newTeam)
         
     }
     
     func saveBracketToFirebase() {
-        vm.saveBracket()
+        vm.saveBracketToFirestore()
     }
     
 }

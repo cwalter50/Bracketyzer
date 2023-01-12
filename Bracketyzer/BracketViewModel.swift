@@ -31,19 +31,24 @@ class BracketViewModel: ObservableObject {
         firManager.loadTeamsInBracket(bracket: bracket) { [weak self] theTeams in
             DispatchQueue.main.async {
                 self?.bracket.teams = theTeams
-                
 //                print("Found \(theTeams.count) Teams for \(self?.bracket.name ?? "")")
             }
         }
     }
     
-    func saveBracket()
+    func saveBracketToFirestore()
     {
         firManager.updateBracket(bracket: self.bracket)
     }
     
-    func addTeamToBracket(team: Team)
+    func addTeamToBracketInFirestore(team: Team)
     {
         firManager.addTeamToBracket(team: team, bracket: self.bracket)
+    }
+    
+    // this will do a batch update of all teams
+    func updateAllTeamsInBracketInFirestore()
+    {
+        firManager.updateAllTeamsInBracket(bracket: self.bracket)
     }
 }
